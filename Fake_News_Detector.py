@@ -41,7 +41,7 @@ HTML = """
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <a href="#home" class="mr-5 hover:text-gray-900">Home</a>
             <a href="#about" class="mr-5 hover:text-gray-900">About</a>
-            <a href="/prediction" class="mr-5 hover:text-gray-900">Prediction</a>
+            <a href="#prediction" class="mr-5 hover:text-gray-900">Prediction</a>
             <a href="#contact us" class="mr-5 hover:text-gray-900">Contact Us</a>
           </nav>
           
@@ -57,7 +57,7 @@ HTML = """
             </h1>
             <p class="mb-8 leading-relaxed">Fake news refers to false or misleading information presented as legitimate news. It can spread quickly through social media and online platforms, often designed to manipulate public opinion, create confusion, or generate revenue through clicks. The proliferation of fake news can have serious consequences, including undermining trust in genuine news sources, influencing elections, and perpetuating harmful stereotypes.</p>
             <div class="flex justify-center">
-              <a href="/prediction"><button class="inline-flex text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg">Prediction</button>
+              <a href="#prediction"><button class="inline-flex text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg">Prediction</button>
               </a>
             </div>
           </div>
@@ -85,6 +85,29 @@ We believe that empowering individuals with the ability to discern fact from fic
             
           </div>
         </div>
+      </section>
+        <section id="prediction" class="text-gray-600 body-font-my-8">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-col text-center w-full mb-20">
+            <h2 class="text-xs text-purple-500 tracking-widest font-medium title-font mb-1">Machine Learning Project</h2>
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Fake News Prediction </h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base"> "In today’s fast-paced information landscape, distinguishing between accurate reporting and misinformation is more crucial than ever. Our fake news detection tool is designed to help you navigate this challenge. By analyzing the content of news articles, our system provides insights into their credibility, enabling you to make informed decisions about the information you consume. Simply paste a news article into the box below to see its prediction and understand its reliability!"</p>
+            <br>
+
+            <div class="center">
+                <form action="/prediction" method="POST">
+                    <div class="mb-3">
+                      <label for="News" class="form-label">"Enter a news article below to check its credibility and see if it's real or fake!"</label>
+                      <input type="text" class="form-control" id="News" name="News" aria-describedby="emailHelp" required>
+                    
+                    </div>
+                    <p class="text-primary"><b>{{prediction_text}} </b></p><br>
+                    <button type="submit" class="btn btn-primary">Check</button>
+                 
+                  </form>
+              </div>
+                
+   
       </section>
       <section id="contact us" class="text-gray-600 body-font relative-my-8" >
         <div class="container px-5 py-24 mx-auto">
@@ -202,71 +225,13 @@ def prediction():
         print(News)
         predict=model.predict(vector.transform([News]))[0]
         print(predict)
-        return render_template_string(html,prediction_text="News headline is  ->  {}".format(predict))
+        return render_template_string(HTML,prediction_text="News headline is  ->  {}".format(predict))
 
 
     else:
-        return render_template_string(html)
+        return render_template_string(HTML)
 
-html = """
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Fake_News_Detector</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body class="bg-purple-200">
-    <header class="text-gray-600 body-font -my-8">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
-              <span class="ml-3 text-xl">Fake News Detector</span>
-            </a>
-            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-              <a href="/" class="mr-5 hover:text-gray-900">Home</a>
-            
-            <a href="/prediction" class="mr-5 hover:text-gray-900">Prediction</a>
-            
-            </nav>
-          </div>
-      </header>
-      <hr>
-      <section class="text-gray-600 body-font-my-8">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-col text-center w-full mb-20">
-            <h2 class="text-xs text-purple-500 tracking-widest font-medium title-font mb-1">Machine Learning Project</h2>
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Fake News Prediction </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base"> "In today’s fast-paced information landscape, distinguishing between accurate reporting and misinformation is more crucial than ever. Our fake news detection tool is designed to help you navigate this challenge. By analyzing the content of news articles, our system provides insights into their credibility, enabling you to make informed decisions about the information you consume. Simply paste a news article into the box below to see its prediction and understand its reliability!"</p>
-            <br>
 
-            <div class="center">
-                <form action="/prediction" method="POST">
-                    <div class="mb-3">
-                      <label for="News" class="form-label">"Enter a news article below to check its credibility and see if it's real or fake!"</label>
-                      <input type="text" class="form-control" id="News" name="News" aria-describedby="emailHelp" required>
-                    
-                    </div>
-                    <p class="text-primary"><b>{{prediction_text}} </b></p><br>
-                    <button type="submit" class="btn btn-primary">Check</button>
-                 
-                  </form>
-              </div>
-                
-   
-      </section>
-      <hr>
-      
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-  </body>
-</html>
-"""
 
 
 if __name__ == "__main__":
